@@ -91,7 +91,7 @@ def SOC_plot(file):
         ax.set_ylim(0, 1)
 
         # 添加图的其他元素
-        plt.title('Base case (current)')
+        plt.title('Case 2 (Auto-Shutoff 5 Minutes Rule-Based)')
         fig.tight_layout()  # 调整整体布局
         plt.grid(True)
         # 显示图例
@@ -119,18 +119,18 @@ def com_plot(file1,file2):
         df2['Short2nd_W'] = df2['Short2nd_kJph'] / 3.6
 
         # 创建一个图形框架，设置图的大小
-        fig, ax = plt.subplots(figsize=(15, 8))
+        fig, ax = plt.subplots(figsize=(15, 5))
 
         # 绘制第一个数据集 - 进口功率
         color = '#2c3e50'
         ax.set_xlabel('Time (hours)')
         ax.set_ylabel('Power (W)')
-        ax.plot(df1.index / 60, df1['Short2nd_W'], label='Case1', color=color, alpha=0.8, linewidth=1)
+        ax.plot(df1.index / 60, df1['Short2nd_W'], label='Case2', color=color, alpha=1, linewidth=1.1, linestyle='--')
         ax.tick_params(axis='y', labelcolor=color)
 
         # 绘制第二个数据集 - 减产
         color = '#ff7f50'  # 青绿色
-        ax.plot(df1.index / 60, df2['Short2nd_W'], label='Case3', color=color, alpha=0.8, linewidth=1, linestyle='--')
+        ax.plot(df1.index / 60, df2['Short2nd_W'], label='Case4', color=color, alpha=0.8, linewidth=1.1)
 
         # 添加图的其他元素
         plt.title('Import Power')
@@ -151,12 +151,12 @@ def comSOC_plot(file1,file2):
     if {'FSOC'}.issubset(df1.columns):
 
         # 创建一个图形框架，设置图的大小
-        fig, ax = plt.subplots(figsize=(15, 8))
+        fig, ax = plt.subplots(figsize=(15, 5))
 
         color = '#6a0dad'
         ax.set_xlabel('Time (hours)')
         ax.set_ylabel('SOC')
-        ax.plot(df1.index / 60, df1['FSOC'], label='Case2 ', color=color, alpha=0.7, linewidth=1, linestyle='--')
+        ax.plot(df1.index / 60, df1['FSOC'], label='Case2 ', color=color, alpha=1, linewidth=1.1, linestyle='--')
         ax.tick_params(axis='y', labelcolor=color)
 
         # 设置y轴的范围为0到1
@@ -164,7 +164,7 @@ def comSOC_plot(file1,file2):
 
         # 绘制第二个数据集 - 减产
         color = '#ff7f50'
-        ax.plot(df1.index / 60, df2['FSOC'], label='Case4', color=color, alpha=0.8, linewidth=1)
+        ax.plot(df1.index / 60, df2['FSOC'], label='Case4', color=color, alpha=0.8, linewidth=1.1)
 
         # 添加图的其他元素
         plt.title('Battery SOC')
@@ -177,15 +177,15 @@ def comSOC_plot(file1,file2):
         print("Some required columns are missing in the CSV file.")
 
 
-file = 'RESULT/5130-BASE.csv'
-result_plot(file)
-SOC_plot(file)
-
+# file = 'RESULT/5130-5min.csv'
+# result_plot(file)
+# SOC_plot(file)
+#
 # file1 = 'RESULT/5130-BASE10day.csv'
 # file2 = 'RESULT/5130-MPC-con10day.csv'
 
-# file1 = 'RESULT/5130-5min10day.csv'
-# file2 = 'RESULT/5130-MPC-10day.csv'
+file1 = 'RESULT/5130-5min10day.csv'
+file2 = 'RESULT/5130-MPC-10day.csv'
 
-# com_plot(file1,file2)
-# comSOC_plot(file1,file2)
+com_plot(file1,file2)
+comSOC_plot(file1,file2)
